@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyectos</title>
+</head>
+<body>
+
+  <main class="content">
+    <div class="page-title">Proyectos</div>
+    <div class="search-sort">
+      <input type="text" placeholder="Buscar" class="search-bar" [(ngModel)]="searchTerm">
+      <select [(ngModel)]="sortOrder">
+        <option value="">Seleccionar</option>
+        <option value="recent">Más recientes</option>
+        <option value="category">Por categoría</option>
+      </select>
+    </div>
+    <!-- <div class="project-count">Cantidad de proyectos: {{ filteredProjects.length }}</div> -->
+    <div class="projects">
+      <div class="project-card" *ngFor="let proyecto of proyectos">
+        <div class="project-info">
+          <p class="project-id">ID: {{ proyecto._id }}</p>
+          <p>Nombre: {{ proyecto.nombre }}</p>
+          <p>Ubicacion: {{ proyecto.ubicacion }}</p>
+        </div>
+        <div class="project-status">
+          <button [ngClass]="getStatus(proyecto.estado)">{{ proyecto.estado }}</button>
+          <button class="view-btn" type="button" (click)="verProyecto(proyecto._id)">Ver</button>
+        </div>
+      </div>
+    </div>
+    <button class="back-btn">Atrás</button>
+  </main>
+
+</body>
+</html>

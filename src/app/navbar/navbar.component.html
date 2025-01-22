@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyectos</title>
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-left">
+      <div class="logo">Nombre de Institución</div>
+      <button (click)="redirectTo('/home')">Mis Proyectos</button>
+      <button type="button" (click)="logout()">Cerrar Sesión</button>
+    </div>
+    <div class="navbar-right">
+      <div class="user-info">
+        <span> {{ user_name }} </span>
+        <div class="user-icon">👤</div>
+      </div>
+    </div>
+  </header>
+
+</body>
+</html>

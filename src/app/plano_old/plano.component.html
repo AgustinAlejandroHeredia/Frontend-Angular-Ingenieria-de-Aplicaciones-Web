@@ -1,0 +1,40 @@
+<h1>Planos existentes</h1>
+    <li class="list-group-item list-group-item-action" *ngFor="let plano of planos">
+        <span cass="badge">{{ plano.nombre }}</span>
+        <div class="pull-right">
+            <button type="button" (click)="setPlanoForm(plano)">Seleccionar para editar</button>
+            <button type="button" (click)="deletePlano(plano)">Eliminar</button>
+        </div>
+    </li>
+
+<br>
+
+<h1>Editar plano</h1>
+<p>Plano seleccionado : {{ plano_id }}</p>
+<form [formGroup]="planoForm" (ngSubmit)="editePlano()">
+
+    <label for="nombre" class="form-label">Nombre</label>
+    <input type="text" class="formControlName" id="nombre" formControlName="nombre" placeholder="nombre_edit">
+
+    <button type="submit">Editar</button>
+    
+</form>
+
+<h1>Crear plano</h1>
+<p>Para test usar id de proyecto : 67213c86d65cb722d9c88baa</p>
+<form [formGroup]="newPanoForm" (ngSubmit)="createPlano()">
+
+    <label for="nombre" class="form-label">Nombre</label>
+    <input type="text" class="formControlName" id="nombre" formControlName="nombre" placeholder="nombre_create">
+
+    <label for="proyectoid" class="form-label">ID de Proyecto</label>
+    <input type="text" class="formControlName" id="proyectoid" formControlName="proyectoid" placeholder="proyectoid_create">
+
+    <button type="submit">Crear plano nuevo</button>
+    
+</form>
+
+<br>
+
+
+

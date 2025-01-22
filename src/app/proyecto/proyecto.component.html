@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyectos</title>
+</head>
+<body>
+  
+  <main class="content">
+
+    <div class="page-title">{{ proyecto.nombre }}</div>
+    <div class="project-card">
+      <div class="project-info">
+        <p>ID: {{ proyecto._id }}</p>
+        <p>Expediente: {{ proyecto.expediente }}</p>
+        <p>Obra: {{ proyecto.obra }}</p>
+        <p>Destino: {{ proyecto.destino }}</p>
+        <p>Ubicacion: {{ proyecto.ubicacion }}</p>
+        <p>Escala: {{ proyecto.escala }}</p>
+        <p>Otros: {{ proyecto.otros }}</p>
+        <p>Referencias: {{ proyecto.referencias }}</p>
+        <p>Antecedentes: {{ proyecto.antecedentes }}</p>
+        <p>Propietario: {{ proyecto.propietario }}</p>
+        <p>Proyectistas: {{ proyecto.proyectistas }}</p>
+        <p>Direccion tecnica: {{ proyecto.direccion_tecnica }}</p>
+        <div class="project-status">
+          <button [ngClass]="getStatus(proyecto.estado)">{{ proyecto.estado }}</button>
+        </div>
+      </div>
+    </div>
+
+    <br>
+
+    <button class="CLASE EN CONCRETO" type="button" (click)="crearPlano()">Añadir plano +</button>
+
+    <br>
+
+    <!-- aca va la seccion donde se muestran los planos que hay subidos para este proyecto, propongo dos listas verticales -->
+    <div class="project-card">
+
+      <div class="muestra-planos" *ngFor="let plano of planos">
+        
+        <div class="plano-info">
+          <p>Nombre: {{ plano.nombre }}</p>
+          <p>Especialidad: {{ plano.especialidad }}</p>
+          <!-- aca iria quiza la cisualizacion de archivos, alguna miniatura -->
+          <button class="view-btn" type="button" (click)="verPlano(plano._id)">Ver</button>
+          <button class="view-btn" type="button" (click)="modPlano(plano._id)">Modificar</button>
+          <button class="view-btn" type="button" (click)="deletePlano(plano._id)">Eliminar</button>
+        </div>
+
+      </div>
+    </div>
+
+    <br>
+
+    <!-- redirige a crear/editar planos (edicion habilitada segun user, propietario o admin) -->
+    
+
+  </main>
+
+</body>
+</html>

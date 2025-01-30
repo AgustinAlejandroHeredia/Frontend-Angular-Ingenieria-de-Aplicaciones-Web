@@ -28,32 +28,12 @@ export class NavbarComponent implements OnInit{
     await this.auth.user$.subscribe(user => {
       this.user_name = user?.name
     })
+
     this.admin = await this.authServices.isAdmin()
     this.creator = await this.authServices.isCreator()
+
     const organizacion = JSON.parse(localStorage.getItem('organizacion') || '[]');
     this.nombre_organizacion = organizacion.nombre
-
-    console.log('----- TESTING OTROS TOKENS -----')
-
-    this.auth.idTokenClaims$.subscribe(claims => {
-      console.log('CLAIMS -> ', claims)
-    })
-    this.auth.user$.subscribe(user => {
-      console.log('USER -> ', user)
-    })
-    this.auth.getAccessTokenSilently().subscribe(data => {
-      console.log('getAccessTokenSilently -> ', data)
-    })
-
-    console.log('PRUEBA FINAL DE ROLES EN TOKENS')
-    this.auth.user$.subscribe(user => {
-      if(user){
-        const roles = user['/roles']
-        console.log('ROLES FINAL -----> ',roles)
-      }
-    })
-
-    console.log('--------------------------------')
   }
 
   redirectTo(url: string): void {
@@ -71,6 +51,7 @@ export class NavbarComponent implements OnInit{
   }
 
   redirectToCreator(){
+    console.log('Redirect to creator')
   }
 
   async logout(){

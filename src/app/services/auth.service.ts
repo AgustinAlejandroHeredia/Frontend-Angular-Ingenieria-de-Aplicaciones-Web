@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthService as Auth0Service } from '@auth0/auth0-angular';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { firstValueFrom, map, Observable } from 'rxjs';
 
 import { apiUrl } from '../../environments/environment';
 
@@ -77,7 +77,7 @@ export class AuthService {
   }
     */
 
-  async checkPermission(permission: string): Promise<boolean> {
+  async checkPermission_old(permission: string): Promise<boolean> {
     try {
       const token = await this.auth0.getAccessTokenSilently().toPromise();
   
@@ -116,11 +116,26 @@ export class AuthService {
     }
   }
 
+  checkPermission(role: string): Observable<boolean> {
+    return new Observable<boolean>((observer) => {
+      this.auth0.user$.subscribe((user) => {
+        const roles: string[] = user?.['/roles'] || []; // Obtener los roles
+        const isAdmin = roles.some((r: string) => r.toLowerCase() === role.toLowerCase()); // Comprobar si tiene el rol
+        observer.next(isAdmin);
+        observer.complete();
+      });
+    });
+  }
+
   async isAdmin(): Promise<boolean> {
-    return this.checkPermission('admin');
+    const res = await firstValueFrom(this.checkPermission('admin'))
+    console.log('Admin : ', res)
+    return res
   }
   
   async isCreator(): Promise<boolean> {
-    return this.checkPermission('creator');
+    const res = await firstValueFrom(this.checkPermission('creator'))
+    console.log('Creator : ', res)
+    return res
   }
 }

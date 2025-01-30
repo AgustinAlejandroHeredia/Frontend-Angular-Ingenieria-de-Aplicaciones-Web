@@ -10,16 +10,37 @@
 
     <main class="content">
 
-        <form [formGroup]="planoForm" (ngSubmit)="modPlano()">
+        <div class="project-card">
 
-            <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" class="formControlName" id="nombre" formControlName="nombre" placeholder="">
-        
-            <button type="submit">Editar</button>
-            
-        </form>
+            <label for="nombre">Nombre:</label>
+            <input 
+                id="nombre" 
+                type="text" 
+                [(ngModel)]="nombre" 
+                placeholder="Escribe el nombre del archivo" 
+            />
+
+            <!-- Campo Archivo Seleccionado -->
+            <!--
+            <div>
+                <label for="archivo">Archivo Seleccionado:</label>
+                <input 
+                    id="archivo" 
+                    type="file" 
+                    accept=".png,.pdf"
+                    (change)="onFileSelected($event)" 
+                />
+                <p>Archivo actual: {{ plano.filename }}</p>
+            </div>
+            -->
+
+            <!-- Botón Editar -->
+            <button (click)="editarArchivo(plano)">Editar</button>
+        </div>
 
     </main>
+
+    
 
 </body>
 </html>

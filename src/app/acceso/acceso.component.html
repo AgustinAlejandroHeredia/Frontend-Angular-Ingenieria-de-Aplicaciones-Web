@@ -1,0 +1,65 @@
+<body>
+
+    <main class="content">
+
+        <div class="projects">
+
+            <button *ngIf="botoninicial" class="create-btn" type="button" (click)="ingresarToken()">Ingresar token +</button>
+            <div *ngIf="ingresoToken">
+                <button for="token" class="create-btn" type="button" (click)="validarToken()">Validar!</button>
+                <input id="token" [(ngModel)]="token" placeholder="ejemplo : 0123 - 4567 - 8912 - 3456">
+            </div>
+
+            <div class="project-card" *ngFor="let organizacion of organizaciones">
+
+                <div class="organizacion" (click)="seleccionarOrganizacion(organizacion)">
+                    <p>{{ organizacion.nombre }}</p>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+</body>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+
+    .organizacion {
+        background-color: #f4f4f4;
+        border: 2px solid #ccc;
+        padding: 20px;
+        margin: 10px 0;
+        cursor: pointer;
+        border-radius: 8px;
+        text-align: center;
+        transition: background-color 0.3s ease;
+        width: 60%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .organizacion:hover {
+        background-color: #e0e0e0;
+    }
+
+    .boton {
+        display: inline-block;
+        background-color: #007bff;
+        color: white;
+        padding: 15px 30px;
+        font-size: 18px;
+        text-align: center;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .boton:hover {
+        background-color: #0056b3;
+    }
+</style>

@@ -34,7 +34,7 @@ export class ProyectoComponent implements OnInit{
 
   async ngOnInit(): Promise<void> {
     this.idProyecto = this.route.snapshot.paramMap.get('idProyecto')
-    this.auth.user$.subscribe(user => {
+    await this.auth.user$.subscribe(user => {
       this.user_name = user?.name;
     })
     await this.getProyecto()
@@ -72,7 +72,7 @@ export class ProyectoComponent implements OnInit{
   }
 
   verPlano(idPlano: string){
-    this.router.navigate(['/plano_view', idPlano])
+    this.router.navigate(['/plano_view', idPlano, this.idProyecto])
   }
 
   modPlano(idPlano: string){

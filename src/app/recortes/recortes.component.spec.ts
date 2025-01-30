@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlanoViewComponent } from './plano-view.component';
+import { RecortesComponent } from './recortes.component';
 
-describe('PlanoViewComponent', () => {
-  let component: PlanoViewComponent;
-  let fixture: ComponentFixture<PlanoViewComponent>;
+describe('RecortesComponent', () => {
+  let component: RecortesComponent;
+  let fixture: ComponentFixture<RecortesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PlanoViewComponent]
+      imports: [RecortesComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PlanoViewComponent);
+    fixture = TestBed.createComponent(RecortesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

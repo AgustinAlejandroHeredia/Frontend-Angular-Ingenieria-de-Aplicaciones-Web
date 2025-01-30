@@ -3,10 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '@auth0/auth0-angular';
 import { Observable } from 'rxjs';
 
+import { apiUrl } from '../../environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
+
   private apiUrl = 'http://localhost:3000/users/roles'; // URL del backend
 
   constructor(private http: HttpClient, private auth: AuthService) {}

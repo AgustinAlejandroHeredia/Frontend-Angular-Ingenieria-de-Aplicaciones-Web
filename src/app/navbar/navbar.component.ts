@@ -3,6 +3,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthService as AuthServices } from '../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -16,20 +17,60 @@ import { FormsModule } from '@angular/forms';
 })
 export class NavbarComponent implements OnInit{
 
-  constructor(private auth: AuthService, private router: Router){}
+  constructor(private auth: AuthService, private router: Router, public authServices: AuthServices){}
 
   user_name: string | undefined
-  rol: string | undefined
+  admin: boolean = false
+  creator: boolean = false
+  nombre_organizacion: string | undefined
 
-  ngOnInit(): void {
-    this.auth.user$.subscribe(user => {
+  async ngOnInit(): Promise<void> {
+    await this.auth.user$.subscribe(user => {
       this.user_name = user?.name
-      // implementar roles
     })
+    this.admin = await this.authServices.isAdmin()
+    this.creator = await this.authServices.isCreator()
+    const organizacion = JSON.parse(localStorage.getItem('organizacion') || '[]');
+    this.nombre_organizacion = organizacion.nombre
+
+    console.log('----- TESTING OTROS TOKENS -----')
+
+    this.auth.idTokenClaims$.subscribe(claims => {
+      console.log('CLAIMS -> ', claims)
+    })
+    this.auth.user$.subscribe(user => {
+      console.log('USER -> ', user)
+    })
+    this.auth.getAccessTokenSilently().subscribe(data => {
+      console.log('getAccessTokenSilently -> ', data)
+    })
+
+    console.log('PRUEBA FINAL DE ROLES EN TOKENS')
+    this.auth.user$.subscribe(user => {
+      if(user){
+        const roles = user['/roles']
+        console.log('ROLES FINAL -----> ',roles)
+      }
+    })
+
+    console.log('--------------------------------')
   }
 
   redirectTo(url: string): void {
     this.router.navigate([url])
+  }
+
+  redirectToAdminUsers(){
+    const organizacion = JSON.parse(localStorage.getItem('organizacion') || '[]');
+    this.router.navigate(['admin_users/',organizacion._id])
+  }
+
+  redirectToAdminProyectos(){
+    const organizacion = JSON.parse(localStorage.getItem('organizacion') || '[]');
+    this.router.navigate(['admin_proyectos/',organizacion._id])
+  }
+
+  redirectToCreator(){
   }
 
   async logout(){

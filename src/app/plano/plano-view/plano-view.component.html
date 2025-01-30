@@ -3,19 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Plano {{ idPlano }}</title>
+  <title>Crear plano nuevo</title>
 </head>
+
 <body>
 
-    <main calss="content">
+  <main class="content">
 
-        <div class="page-title">Plano {{ idPlano }}</div>
-        <div class="project-card">
-            <div class="project-info">
-                <p>INFO DEL PLANO</p>
-            </div>
-        </div>
+    <button class="view-btn" (click)="downloadPlano()">Descargar Archivo</button>
+    
+    <ng-container *ngIf="!habilitarRecorte" [ngSwitch]="tipo">
+      <button class="view-btn" (click)="recortar()">Recortar Imagen</button>
+    </ng-container>
 
-    </main>
+    <select *ngIf="seleccionPaginaRecorte" (change)="seleccionEvento($event)">
+      <option value="" selected disabled>Seleccionar</option>
+      <option *ngFor="let num of cantPaginas" [value]="num">{{ num }}</option>
+    </select>
+
+    <button *ngIf="habilitarRecorte" class="create-cut-btn" (click)="generarRecorte()">Generar Recorte</button>
+
+    <br>
+
+    <form *ngIf="habilitarRecorte" [formGroup]="recorteForm">
+
+      <label for="especialidad" class="form-label">Especialidad</label>
+      <input type="text" class="formControlName" id="especialidad" formControlName="especialidad">
+
+      <label for="etiquetas" class="form-label">Etiquetas</label>
+      <input type="text" class="formControlName" id="etiquetas" formControlName="etiquetas">
+
+    </form>
+
+    <div *ngIf="habilitarContenedor">
+      <div id="cropper-container"></div>
+    </div>
+
+    <br>
+
+    <div *ngIf="planoUrl">
+      <ng-container [ngSwitch]="tipo">
+        
+        <!-- para mostrar pdf -->
+        <object #pdfContainer *ngSwitchCase="'pdf'" [data]="planoUrl" type="application/pdf" class="pdf-container" id="pdf-presente"></object>
+        <!-- dejo este canvas oculto para poder renderizar el pdf en canvas pero seguir mostrando el pdf en -->
+        <!-- <canvas #pdfCanvas style="border: 1px solid black; position: absolute; top: 0; left: 0; pointer-events: none;"></canvas> -->
+        <canvas #pdfCanvas></canvas>
+        
+        <!-- para mostrar imagen -->
+        <img *ngSwitchCase="'png'" [src]="planoUrl" alt="Plano" class="image-container" id="png-presente" />
+        
+        <!-- Si el tipo no es reconocido (opcional) -->
+        <p *ngSwitchDefault>Tipo de archivo no soportado.</p>
+
+      </ng-container>
+    </div>
+
+  </main>
 
 </body>

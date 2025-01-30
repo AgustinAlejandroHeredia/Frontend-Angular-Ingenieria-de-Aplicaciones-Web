@@ -5,20 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Proyectos</title>
 </head>
-<body>
-  <header class="navbar">
-    <div class="navbar-left">
-      <div class="logo">Nombre de Institución</div>
-      <button (click)="redirectTo('/home')">Mis Proyectos</button>
-      <button type="button" (click)="logout()">Cerrar Sesión</button>
-    </div>
-    <div class="navbar-right">
-      <div class="user-info">
-        <span> {{ user_name }} </span>
-        <div class="user-icon">👤</div>
+  <body>
+    <header class="navbar">
+      <div class="navbar-left">
+        <div class="logo">{{ nombre_organizacion }}</div>
+        <button (click)="redirectTo('/acceso')">Organizaciones</button>
+        <button (click)="redirectTo('/home')">Mis Proyectos</button>
+        <button (click)="redirectTo('/mis_recortes')">Mis Recortes</button>
+        <button *ngIf="admin" (click)="redirectToAdminProyectos()">Admin. Proyectos</button>
+        <button *ngIf="admin" (click)="redirectToAdminUsers()">Admin. Usuarios</button>
+        <button *ngIf="creator" (click)="redirectToCreator()">Crear Organizacion</button>
+        <button type="button" (click)="logout()">Cerrar Sesión</button>
       </div>
-    </div>
-  </header>
-
-</body>
+      <div class="navbar-right">
+        <div class="user-info">
+          <span> {{ user_name }} </span>
+          <div class="user-icon">👤</div>
+        </div>
+      </div>
+    </header>
+  </body>
 </html>

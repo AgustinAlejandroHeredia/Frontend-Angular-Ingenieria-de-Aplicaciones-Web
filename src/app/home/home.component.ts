@@ -29,8 +29,8 @@ export class HomeComponent implements OnInit{
   sortOrder: string = '';
   user_name: string | undefined;
  
-  ngOnInit(): void {
-    this.auth.user$.subscribe(user => {
+  async ngOnInit(): Promise<void> {
+    await this.auth.user$.subscribe(user => {
       this.user_name = user?.name;
     })
     console.log(this.getProyectosByUser())

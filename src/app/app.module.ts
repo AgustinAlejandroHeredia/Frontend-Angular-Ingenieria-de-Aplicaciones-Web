@@ -11,14 +11,14 @@ import { PlanoComponent } from './plano_old/plano.component';
 import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
 import { NavbarComponent } from './navbar/navbar.component';
-import { FileUploadComponent } from './file-upload/file-upload.component';
+
+import { AdminGuard } from './guards/role.guard';
 
 @NgModule({
   declarations: [
     AppComponent,
     PlanoComponent,
     NavbarComponent,
-    FileUploadComponent,
   ],
   imports: [
     BrowserModule,

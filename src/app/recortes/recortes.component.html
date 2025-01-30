@@ -1,0 +1,24 @@
+<body>
+
+    <main class="content">
+
+        <div class="page-title">Mis recortes</div>
+
+        <div class="projects">
+            <div class="project-card" *ngFor="let recorte of recortes">
+
+                <div class="project-info">
+                    <p class="project-id">{{ recorte.filename }}</p>
+                    <p>Fecha de creacion: {{ recorte.fecha_creacion | date:'short' }}</p>
+                    <p>Tamaño: {{ recorte.size }}</p>
+                    <p>Tipo: {{ recorte.type }} </p>
+                    <p>Especialidad: {{ recorte.especialidad }} </p>
+                    <p>Etiquetas: {{ recorte.etiquetas }} </p>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+</body>

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlanoComponent } from './plano-create.component';
+import { AccesoComponent } from './acceso.component';
 
-describe('PlanoComponent', () => {
-  let component: PlanoComponent;
-  let fixture: ComponentFixture<PlanoComponent>;
+describe('AccesoComponent', () => {
+  let component: AccesoComponent;
+  let fixture: ComponentFixture<AccesoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PlanoComponent]
+      imports: [AccesoComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PlanoComponent);
+    fixture = TestBed.createComponent(AccesoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

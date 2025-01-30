@@ -8,38 +8,37 @@
 
 <body>
 
-  <h1>Creando nuevo plano</h1>
-
-  <main class="content">
-
-    <form [formGroup]="newPlanoForm" (ngSubmit)="createPlano()">
-
-      <label for="nombre" class="form-label">Nombre</label>
-      <input type="text" class="formControlName" id="nombre" formControlName="nombre" placeholder="">
-
-      <label for="especialidad" class="form-label">Especialidad</label>
-      <input type="text" class="formControlName" id="nombre" formControlName="especialidad" placeholder="">
+    <h1>Creando nuevo plano</h1>
   
-      <button type="submit">Crear!</button>
-      
-    </form>
-
-    <br>
-
-    <div class="project-card">
-      <div>
-        <form (ngSubmit)="onSubmit()" #fileForm="ngForm">
-          <input
-            type="file"
-            (change)="onFileSelected($event)"
-            accept=".png,.pdf"
-            required
-          />
-          <button type="submit" [disabled]="!selectedFile" (click)="enviarDocumento()">Subir archivo</button>
-        </form>
+    <main class="content">
+  
+      <!--
+      <div class="project-card">
+        <div>
+          <form (ngSubmit)="onSubmit()" #fileForm="ngForm">
+            <input
+              type="file"
+              (change)="onFileSelected($event)"
+              accept=".png,.pdf"
+              required
+            />
+            <button type="submit" [disabled]="!selectedFile">Subir archivo</button>
+          </form>
+        </div>
       </div>
-    </div>
+      -->
 
-  </main>
-</body>
+      <div>
+        <h3>Subir Archivo</h3>
+        <input type="file" (change)="onFileSelected($event)" accept=".png, .pdf"/>
+        <button (click)="onUpload()" [disabled]="!selectedFile">Subir</button>
+      
+        <div *ngIf="uploadProgress > 0">
+          <p>Progreso: {{ uploadProgress }}%</p>
+          <progress [value]="uploadProgress" max="100"></progress>
+        </div>
+      </div>
+  
+    </main>
+  </body>
 </html>

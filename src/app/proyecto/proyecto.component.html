@@ -32,7 +32,7 @@
 
     <br>
 
-    <button class="CLASE EN CONCRETO" type="button" (click)="crearPlano()">Añadir plano +</button>
+    <button class="create-btn" type="button" (click)="crearPlano()">Añadir plano +</button>
 
     <br>
 
@@ -42,12 +42,11 @@
       <div class="muestra-planos" *ngFor="let plano of planos">
         
         <div class="plano-info">
-          <p>Nombre: {{ plano.nombre }}</p>
-          <p>Especialidad: {{ plano.especialidad }}</p>
+          <p>Nombre: {{ plano.filename }}</p>
+          <p>Subido por: {{ plano.subido_por }}</p>
           <!-- aca iria quiza la cisualizacion de archivos, alguna miniatura -->
           <button class="view-btn" type="button" (click)="verPlano(plano._id)">Ver</button>
-          <button class="view-btn" type="button" (click)="modPlano(plano._id)">Modificar</button>
-          <button class="view-btn" type="button" (click)="deletePlano(plano._id)">Eliminar</button>
+          <button class="delete-btn" type="button" (click)="deletePlano(plano._id)">Eliminar</button>
         </div>
 
       </div>

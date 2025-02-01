@@ -5,6 +5,8 @@ import { AccesoService } from './acceso.service';
 import { firstValueFrom } from 'rxjs';
 import { AuthService } from '@auth0/auth0-angular';
 import { Router } from '@angular/router';
+import { OrganizacionService } from '../organizacion/organizacion.service';
+import { ActualizarNavbarService } from '../services/actualizar-navbar.service';
 
 @Component({
   selector: 'app-acceso',
@@ -19,7 +21,7 @@ import { Router } from '@angular/router';
 })
 export class AccesoComponent implements OnInit{
 
-  constructor(private readonly accesoService: AccesoService, private auth: AuthService, private router: Router){}
+  constructor(private readonly accesoService: AccesoService, private auth: AuthService, private router: Router, private organizacionService: OrganizacionService, private ActualizarNavbarService: ActualizarNavbarService){}
 
   organizaciones: any[] = []
 
@@ -33,6 +35,7 @@ export class AccesoComponent implements OnInit{
     const user = await firstValueFrom(this.auth.user$)
     const userId = user?.sub
     await this.getOrganizaciones(userId!)
+    this.organizacionService.setOrganizacionNombre('') // envia el nombre de la organizacion como vacio porque se debe seleccionar ahora
   }
 
   getOrganizaciones(userId: string){
@@ -52,16 +55,26 @@ export class AccesoComponent implements OnInit{
     this.ingresoToken=true
   }
 
-  validarToken(){
+  async validarToken(){
     this.ingresoToken=false
     this.botoninicial=true
-
+    const user = await firstValueFrom(this.auth.user$)
+    const userId = user?.sub
+    const userNombre = user?.name
+    const res = await firstValueFrom(this.accesoService.validarToken(this.token, userId!, userNombre!))
+    if(res){
+      alert('Token valido')
+      this.getOrganizaciones(userId!) // refresca el contenido, si lleva true es que se añade el user a una nueva organizacion
+    }else{
+      alert('Token invalido')
+    }
   }
 
   seleccionarOrganizacion(organizacion: any){
+    this.organizaciones = organizacion
+    console.log('ORGANIZACION SELECCIONADA -> ', organizacion)
     console.log('Se selecciona la organizacion con id ',organizacion._id)
-    localStorage.setItem('organizacion', JSON.stringify(organizacion))
+    this.ActualizarNavbarService.actualizarStorage(organizacion._id, organizacion.nombre)
     this.router.navigate(['/home', organizacion._id])
   }
-
 }

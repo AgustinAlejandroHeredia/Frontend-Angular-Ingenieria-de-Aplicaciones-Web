@@ -26,6 +26,7 @@
         <p>Direccion tecnica: {{ proyecto.direccion_tecnica }}</p>
         <div class="project-status">
           <button [ngClass]="getStatus(proyecto.estado)">{{ proyecto.estado }}</button>
+          <button *ngIf="admin || creator" class="view-btn" (click)="modificarProyecto()">Administrar proyecto</button>
         </div>
       </div>
     </div>
@@ -46,7 +47,7 @@
           <p>Subido por: {{ plano.subido_por }}</p>
           <!-- aca iria quiza la cisualizacion de archivos, alguna miniatura -->
           <button class="view-btn" type="button" (click)="verPlano(plano._id)">Ver</button>
-          <button class="delete-btn" type="button" (click)="deletePlano(plano._id)">Eliminar</button>
+          <button *ngIf="user_name === plano.subido_por || admin" class="delete-btn" type="button" (click)="deletePlano(plano._id)">Eliminar</button>
         </div>
 
       </div>

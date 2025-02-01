@@ -18,7 +18,7 @@ export const appConfig: ApplicationConfig = {
       authorizationParams: {
         redirect_uri: window.location.origin,
         audience: environment.audience,
-        //scope: 'openid profile email read:users read:roles'
+        scope: 'openid profile email read:users read:roles'
       }
     }),
   ]

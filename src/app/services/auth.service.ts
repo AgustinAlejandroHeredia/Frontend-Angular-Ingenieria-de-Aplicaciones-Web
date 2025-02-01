@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AuthService as Auth0Service } from '@auth0/auth0-angular';
-import { HttpClient } from '@angular/common/http';
-import { firstValueFrom, map, Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, firstValueFrom, map, Observable, switchMap, throwError } from 'rxjs';
 
-import { apiUrl } from '../../environments/environment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -22,99 +22,6 @@ export class AuthService {
     });
   }
   */
-
-  getUserProfile() {
-    return this.auth0.user$;
-  }
-
-  getToken() {
-    //return this.auth0.idToken$;
-    return this.auth0.idTokenClaims$
-  }
-
-  getProtectedResource() {
-    return this.http.get('http://localhost:3000/profile');
-  }
-
-  /*
-  async isAdmin(){
-    try {
-      const token = await this.auth0.getAccessTokenSilently().toPromise();
-
-      if (!token) {
-        console.log('No se obtuvo el token');
-        return false;
-      }
-
-      // Decodificar el token
-      const tokenParts = token.split('.');
-      if (tokenParts.length !== 3) {
-        throw new Error('El token no es un JWT válido');
-      }
-
-      const payloadBase64 = tokenParts[1];
-      const payloadJson = atob(payloadBase64);
-      const payload = JSON.parse(payloadJson);
-      const permissions = payload.permissions || [];
-
-      console.log('----- Permission -----');
-      console.log('Permission -> ', permissions);
-
-      const isAdmin = permissions.includes('admin');
-
-      if (isAdmin) {
-        console.log('Administrador Admitido');
-      } else {
-        console.log('No es administrador');
-      }
-
-      console.log('----------------------');
-      return isAdmin;
-    } catch (error) {
-      console.error('Error al procesar el token:', error);
-      return false;
-    }
-  }
-    */
-
-  async checkPermission_old(permission: string): Promise<boolean> {
-    try {
-      const token = await this.auth0.getAccessTokenSilently().toPromise();
-  
-      if (!token) {
-        console.log('No se obtuvo el token');
-        return false;
-      }
-  
-      // Decodificar el token
-      const tokenParts = token.split('.');
-      if (tokenParts.length !== 3) {
-        throw new Error('El token no es un JWT válido');
-      }
-  
-      const payloadBase64 = tokenParts[1];
-      const payloadJson = atob(payloadBase64);
-      const payload = JSON.parse(payloadJson);
-      const permissions = payload.permissions || [];
-  
-      console.log('----- Permission -----');
-      console.log('Permission -> ', permissions);
-  
-      const hasPermission = permissions.includes(permission);
-  
-      if (hasPermission) {
-        console.log(`${permission.charAt(0).toUpperCase() + permission.slice(1)} Admitido`);
-      } else {
-        console.log(`No es ${permission}`);
-      }
-  
-      console.log('----------------------');
-      return hasPermission;
-    } catch (error) {
-      console.error('Error al procesar el token:', error);
-      return false;
-    }
-  }
 
   checkPermission(role: string): Observable<boolean> {
     return new Observable<boolean>((observer) => {
@@ -138,4 +45,107 @@ export class AuthService {
     console.log('Creator : ', res)
     return res
   }
+
+  /*
+  getAccessToken(): Observable<any> {
+    const url = `https://${environment.auth0Domain}/oauth/token`;
+    const body = {
+      client_id: environment.auth0ClientId,
+      client_secret: environment.auth0Secret,
+      audience: environment.auth0Domain,
+      grant_type: 'client_credentials',
+    };
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    return this.http.post(url, body, { headers });
+  }
+
+  getAccessTokenString(): Observable<string> {
+    return new Observable((observer) => {
+      this.auth0.getAccessTokenSilently().subscribe({
+        next: (token) => observer.next(token), // Devuelve el token obtenido
+        error: (error) => observer.error(error), // Maneja el error si falla la obtención
+      });
+    });
+  }
+  
+
+  getUserData(userId: string, accessToken: string): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${accessToken}`, // Agregamos el token en los headers
+    });
+
+    return this.http.get(`${environment.apiUrl}/${userId}`, { headers });
+  }
+  */
+
+  /*
+  getAccessToken(): Promise<string> {
+    return this.auth0.getAccessTokenSilently().toPromise().then((token) => {
+      if (!token) {
+        throw new Error('Access token is undefined');
+      }
+      return token;
+    });
+  }
+  */
+
+  getAccessToken(): Observable<string> {
+    return this.auth0.getAccessTokenSilently();
+  }
+
+
+  /*
+  getUserData(userId: string) {
+    return this.getAccessToken().then((token) => {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.get(`${environment.apiUrl}/users/user_data/${userId}`, { headers }).toPromise();
+    });
+  }
+    */
+
+  /*
+  getUserData(userId: string) {
+    return this.auth0.getAccessTokenSilently().pipe(
+      switchMap((token) => {
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        return this.http.get(`${environment.apiUrl}/users/user_data/${userId}`, { headers });
+      })
+    );
+  }
+    */
+
+  getUserData(userId: string): Observable<any> {
+    return this.auth0.getAccessTokenSilently().pipe(
+      switchMap((accessToken) => {
+        if (!accessToken) {
+          throw new Error('No access token available');
+        }
+  
+        const headers = new HttpHeaders().set(
+          'Authorization',
+          `Bearer ${accessToken}`
+        );
+  
+        return this.http.get(`${environment.apiUrl}/users/user_data/${userId}`, { headers }).pipe(
+          catchError((error) => {
+            console.error('Error al obtener los datos del usuario:', error);
+            return throwError(() => new Error('Error al obtener los datos del usuario'));
+          })
+        );
+      })
+    );
+  }
+
+
+
+  getUserDataFromBackend(userId: string): Observable<any> {
+    return this.auth0.getAccessTokenSilently().pipe(  // Obtenemos el token con getAccessTokenSilently()
+      switchMap((token) => {
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);  // Añadimos el token al header
+        return this.http.get(`${environment.apiUrl}/users/user_data/${userId}`, { headers, responseType: 'json' });  // Realizamos la solicitud al backend
+      })
+    );
+  }
+
 }

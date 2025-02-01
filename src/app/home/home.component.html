@@ -17,21 +17,34 @@
         <option value="category">Por categoría</option>
       </select>
     </div>
-    <!-- <div class="project-count">Cantidad de proyectos: {{ filteredProjects.length }}</div> -->
-    <div class="projects">
-      <div class="project-card" *ngFor="let proyecto of proyectos">
-        <div class="project-info">
-          <p class="project-id">ID: {{ proyecto._id }}</p>
-          <p>Nombre: {{ proyecto.nombre }}</p>
-          <p>Ubicacion: {{ proyecto.ubicacion }}</p>
-        </div>
-        <div class="project-status">
-          <button [ngClass]="getStatus(proyecto.estado)">{{ proyecto.estado }}</button>
-          <button class="view-btn" type="button" (click)="verProyecto(proyecto._id)">Ver</button>
+
+    <button *ngIf="admin || creator" class="create-btn" type="button" (click)="crearProyecto()">Crear Proyecto +</button>
+
+    <div *ngIf="proyectos.length > 0">
+
+      <div class="project-count">Cantidad de proyectos: {{ proyectos.length }}</div>
+      <div class="projects">
+        <div class="project-card" *ngFor="let proyecto of proyectos">
+          <div class="project-info">
+            <p class="project-id">ID: {{ proyecto._id }}</p>
+            <p>Nombre: {{ proyecto.nombre }}</p>
+            <p>Ubicacion: {{ proyecto.ubicacion }}</p>
+          </div>
+          <div class="project-status">
+            <button [ngClass]="getStatus(proyecto.estado)">{{ proyecto.estado }}</button>
+            <button class="view-btn" type="button" (click)="verProyecto(proyecto._id)">Ver</button>
+          </div>
         </div>
       </div>
+
     </div>
-    <button class="back-btn">Atrás</button>
+
+    <div *ngIf="proyectos.length === 0">
+
+      <p class="no-content-msg">No hay proyectos para mostrar actualmente</p>
+
+    </div>
+
   </main>
 
 </body>

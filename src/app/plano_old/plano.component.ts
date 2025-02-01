@@ -73,7 +73,7 @@ async createPlano(){
 }
 
 
-// hacer el update : como tal los guarda bien en el form, pero no se completan los imput con los datos del form en si
+// hacer el update : como tal los guarda bien en el form, pero no se completan los input con los datos del form en si
 setPlanoForm(plano: any){
   console.log('setPlanoFrom')
   this.plano_id = plano._id

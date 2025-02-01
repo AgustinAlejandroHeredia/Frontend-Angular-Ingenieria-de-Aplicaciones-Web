@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyectos</title>
+</head>
+<body>
+
+    <main class="content">
+
+        <div class="page-title">Modificando el proyecto {{ proyecto.nombre }}</div>
+
+        <form [formGroup]="proyectoForm">
+
+            <input type="text" class="formControlName" id="expediente" formControlName="expediente" placeholder="expediente">
+
+            <input type="text" class="formControlName" id="obra" formControlName="obra" placeholder="obra">
+            
+            <input type="text" class="formControlName" id="destino" formControlName="destino" placeholder="destino">
+
+            <input type="text" class="formControlName" id="ubicacion" formControlName="ubicacion" placeholder="ubicacion">
+
+            <input type="text" class="formControlName" id="escala" formControlName="escala" placeholder="escala">
+
+            <input type="text" class="formControlName" id="otros" formControlName="otros" placeholder="otros">
+
+            <input type="text" class="formControlName" id="referencias" formControlName="referencias" placeholder="referencias">
+
+            <input type="text" class="formControlName" id="antecedentes" formControlName="antecedentes" placeholder="antecedentes">
+
+            <input type="text" class="formControlName" id="propietario" formControlName="propietario" placeholder="propietario">
+
+            <input type="text" class="formControlName" id="proyectistas" formControlName="proyectistas" placeholder="proyectistas">
+            
+            <input type="text" class="formControlName" id="direccion_tecnica" formControlName="direccion_tecnica" placeholder="direccion_tecnica">
+            
+        </form>
+
+        <br>
+
+        <select id="estado" [(ngModel)]="estadoSeleccionado">
+            <option *ngFor="let estado of estados" [value]="estado">{{estado}}</option>
+        </select>
+
+        <br>
+
+        <button class="create-btn" type="submit" (click)="editarProyecto()">Editar</button>
+
+    </main>
+
+    <br>
+
+    <main class="content">
+
+        <div class="page-title">Usuarios del proyecto {{'('}} {{ usuariosProyecto.length }} {{')'}} </div>
+
+        <p>Se excluye al usuario administrador actual</p>
+
+        <div class="muestra-planos" *ngFor="let usuario of usuariosProyecto">
+            <div class="users-options">
+                <p class="usuario-info">Nombre: {{ usuario.nombre }}</p>
+                <button class="delete-btn-user" (click)="eliminarUser(usuario.id, usuario.nombre)">X</button>
+            </div>
+        </div>
+
+    </main>
+
+    <br>
+
+    <main class="content">
+
+        <div class="page-title">Añadir usuarios al proyecto {{'('}} {{ usuariosOrganizacion.length }} {{')'}} </div>
+
+        <div class="muestra-planos" *ngFor="let usuario of usuariosOrganizacion">
+            <div class="users-options">
+                <p class="usuario-info">Nombre: {{ usuario.nombre }}</p>
+                <button class="invite-btn-user" (click)="invitarUser(usuario.id, usuario.nombre)">Invitar</button>
+            </div>
+        </div>
+
+    </main>
+
+</body>

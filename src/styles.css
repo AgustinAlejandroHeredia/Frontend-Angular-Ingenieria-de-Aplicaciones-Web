@@ -83,6 +83,12 @@ body {
     flex: 1;
     margin-left: 10px;
   }
+
+  .users-options {
+    display: flex;           /* Utiliza flexbox para alinear los elementos */
+    align-items: center;     /* Centra los elementos verticalmente */
+    gap: 10px;
+  }
   
   .project-status button {
     margin-right: 5px;
@@ -126,6 +132,24 @@ body {
     cursor: pointer;
   }
 
+  .usuario-info {
+    margin-right: 10px;    /* Espacio entre el nombre y el botón */
+  }
+
+  .delete-btn-user {
+    background-color: red; /* Estilo del botón */
+    color: white;          /* Color del texto */
+    border: none;          /* Sin bordes */
+    cursor: pointer;       /* Cambia el cursor al pasar por encima */
+  }
+
+  .invite-btn-user {
+    background-color: rgb(55, 156, 51); /* Estilo del botón */
+    color: white;          /* Color del texto */
+    border: none;          /* Sin bordes */
+    cursor: pointer;       /* Cambia el cursor al pasar por encima */
+  }
+
   .create-btn {
     background-color: #004d99;
     color: white;
@@ -155,6 +179,15 @@ body {
 
   .hidden {
     display: none;
+  }
+
+  .no-content-msg {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
+    padding-top: 30px;
+    padding-bottom: 30px;
   }
 
   /* ESTILO PARA MUESTRA DE ARCHIVOS */

@@ -2,21 +2,45 @@
 
     <main class="content">
 
-        <div class="projects">
+        <div class="projects" *ngIf="organizaciones.length > 0">
+
+            <div class="page-title">Organizaciones Disponibles {{'('}} {{ organizaciones.length }} {{')'}} </div>
+
+            <!--
+            <div>
+                <div class="project-card" *ngFor="let organizacion of organizaciones">
+                    <div class="organizacion" (click)="seleccionarOrganizacion(organizacion)">
+                        <p>{{ organizacion.nombre }}</p>
+                    </div>
+                </div>
+            </div>
+            -->
+
+            <div class="item-list">
+                <button class="btn" *ngFor="let organizacion of organizaciones" (click)="seleccionarOrganizacion(organizacion)">
+                    {{ organizacion.nombre }}
+                </button>
+            </div>
 
             <button *ngIf="botoninicial" class="create-btn" type="button" (click)="ingresarToken()">Ingresar token +</button>
             <div *ngIf="ingresoToken">
-                <button for="token" class="create-btn" type="button" (click)="validarToken()">Validar!</button>
-                <input id="token" [(ngModel)]="token" placeholder="ejemplo : 0123 - 4567 - 8912 - 3456">
+                <button for="token" class="create-btn" type="button" (click)="validarToken()">Validar</button>
+                <input id="token" [(ngModel)]="token" placeholder="ejemplo : 12345">
             </div>
 
-            <div class="project-card" *ngFor="let organizacion of organizaciones">
+        </div>
 
-                <div class="organizacion" (click)="seleccionarOrganizacion(organizacion)">
-                    <p>{{ organizacion.nombre }}</p>
-                </div>
+        <div class="projects" *ngIf="organizaciones.length === 0">
 
+            <button *ngIf="botoninicial" class="boton" type="button" (click)="ingresarToken()">Ingresar token +</button>
+            <div *ngIf="ingresoToken" class="organizacion">
+                <button for="token" class="boton" type="button" (click)="validarToken()">Validar!</button>
+                <br>
+                <input id="token" [(ngModel)]="token" placeholder="ejemplo : 12345">
             </div>
+
+            <p>Si ha sido invitado a una de las organizaciones revise su email, deberia haber recibido un token/codigo de 6 digitos numericos que debe ingresar para acceder.</p>
+
         </div>
 
     </main>
@@ -24,9 +48,53 @@
 </body>
 
 <style>
+
+.page-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;  /* Centrar el texto */
+  width: 100%;         /* Asegura que el contenedor ocupe todo el ancho disponible */
+}
+
+.item-list {
+  display: flex;
+  flex-direction: column;  /* Apilar los botones uno debajo del otro */
+  align-items: center;     /* Centrar los botones horizontalmente */
+  gap: 20px;               /* Espacio entre los botones */
+  padding: 20px;
+  background-color: #f9f9f9;  /* Fondo de la lista */
+}
+
+.btn {
+  background-color: #004d99;
+  color: white;
+  padding: 20px 40px;       /* Aumentar el padding para hacer el botón más grande */
+  border: none;
+  border-radius: 8px;       /* Bordes redondeados */
+  cursor: pointer;
+  width: 250px;             /* Aumentar el ancho de los botones */
+  text-align: center;       /* Centrar el texto */
+  font-size: 20px;          /* Aumentar el tamaño de la fuente */
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #003366;  /* Cambio de color al pasar el mouse */
+}
+
     body {
         font-family: Arial, sans-serif;
         padding: 20px;
+    }
+
+    .create-btn {
+        background-color: #004d99;
+        color: white;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 10%;
     }
 
     .organizacion {
@@ -62,4 +130,6 @@
     .boton:hover {
         background-color: #0056b3;
     }
+
+    
 </style>

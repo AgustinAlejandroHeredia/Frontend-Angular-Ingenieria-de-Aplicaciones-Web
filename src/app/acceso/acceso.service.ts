@@ -10,12 +10,8 @@ export class AccesoService {
 
   constructor(private http: HttpClient) { }
 
-  validarToken(token: string){
-
-  }
-
-  ingresar(organizacionId: string){
-    
+  validarToken(token: string, userId: string, userNombre: string){
+    return this.http.get<any>(`${apiUrl}/organizacion-access-token/validar/${token}/${userId}/${userNombre}`)
   }
 
   getOrganizaciones(userId: string){

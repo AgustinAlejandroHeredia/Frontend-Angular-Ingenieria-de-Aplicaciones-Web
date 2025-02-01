@@ -1,0 +1,47 @@
+<body>
+
+    <main class="content">
+
+        <div class="page-title">Creando nueva organizacion</div>
+
+        <p>En esta seccion todos los campos son obligatorios</p>
+
+        <p>Forma:</p>
+
+        <form [formGroup]="formaForm">
+
+            <input type="text" class="formControlName" id="letra" formControlName="letra" placeholder="letra">
+
+            <input type="text" class="formControlName" id="numero" formControlName="numero" placeholder="numero">
+            <div *ngIf="formaForm.get('numero')?.invalid && formaForm.get('numero')?.touched">
+                <small class="error">El campo número debe ser un número valido.</small>
+            </div>
+            
+            <input type="text" class="formControlName" id="year" formControlName="year" placeholder="year">
+            <div *ngIf="formaForm.get('year')?.invalid && formaForm.get('year')?.touched">
+                <small class="error">El campo año debe ser un número de 4 digitos.</small>
+            </div>
+
+            <input type="text" class="formControlName" id="partida" formControlName="partida" placeholder="partida">
+
+        </form>
+
+        <p>Organizacion:</p>
+
+        <form [formGroup]="organizacionForm">
+
+            <input type="text" class="formControlName" id="nombre" formControlName="nombre" placeholder="nombre">
+
+            <input type="text" class="formControlName" id="direccion" formControlName="direccion" placeholder="direccion">
+
+            <input type="text" class="formControlName" id="contactos" formControlName="contactos" placeholder="contactos">
+
+        </form>
+
+        <br>
+
+        <button class="create-btn" type="submit" (click)="crearOrganizacion()">Crear organizacion</button>
+
+    </main>
+
+</body>

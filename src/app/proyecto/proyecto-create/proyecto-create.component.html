@@ -1,0 +1,54 @@
+<body>
+
+    <main class="content">
+
+        <div class="page-title">Creando proyecto nuevo</div>
+
+        <form [formGroup]="proyectoForm">
+            <input type="text" class="formControlName" id="nombre" formControlName="nombre" placeholder="nombre del proyecto">*
+        </form>
+
+        <br>
+
+        <form [formGroup]="proyectoForm">
+
+            <input type="text" class="formControlName" id="expediente" formControlName="expediente" placeholder="expediente">
+
+            <input type="text" class="formControlName" id="obra" formControlName="obra" placeholder="obra">
+            
+            <input type="text" class="formControlName" id="destino" formControlName="destino" placeholder="destino">
+
+            <input type="text" class="formControlName" id="ubicacion" formControlName="ubicacion" placeholder="ubicacion">
+
+            <input type="text" class="formControlName" id="escala" formControlName="escala" placeholder="escala">
+
+            <input type="text" class="formControlName" id="otros" formControlName="otros" placeholder="otros">
+
+            <input type="text" class="formControlName" id="referencias" formControlName="referencias" placeholder="referencias">
+
+            <input type="text" class="formControlName" id="antecedentes" formControlName="antecedentes" placeholder="antecedentes">
+
+            <input type="text" class="formControlName" id="propietario" formControlName="propietario" placeholder="propietario">
+
+            <input type="text" class="formControlName" id="proyectistas" formControlName="proyectistas" placeholder="proyectistas">
+            
+            <input type="text" class="formControlName" id="direccion_tecnica" formControlName="direccion_tecnica" placeholder="direccion_tecnica">
+            
+        </form>
+
+        <!--
+        <select id="estado" [(ngModel)]="estadoSeleccionado">
+            <option value="" disabled>estado</option>
+            <option *ngFor="let estado of estados" [value]="estado">{{estado}}</option>
+        </select>
+        -->
+
+        <br>
+
+        <p>Una vez creado podra añadir usuarios seleccionando "Administrar proyecto"</p>
+
+        <button class="create-btn" type="submit" (click)="crearProyecto()">Crear proyecto</button>
+
+    </main>
+
+</body>

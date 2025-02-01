@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ProyectoService } from './proyecto.service';
+import { ProyectoService } from '../proyecto.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService as AuthServices } from '../../services/auth.service';
 
 // necesita usar funciones de plano que ya estan declaradas en los service de planos
-import { PlanoService } from '../plano/plano.service';
+import { PlanoService } from '../../plano/plano.service';
 
 @Component({
   selector: 'app-proyecto',
@@ -25,26 +26,34 @@ import { PlanoService } from '../plano/plano.service';
 })
 export class ProyectoComponent implements OnInit{
 
-  constructor(private proyectoService: ProyectoService, private planoService:PlanoService, private route: ActivatedRoute, public auth:AuthService, private router:Router){}
+  constructor(private proyectoService: ProyectoService, private planoService:PlanoService, private route: ActivatedRoute, public auth:AuthService, private router:Router, private authServices:AuthServices){}
+
+  
 
   planos: any[] = []
   proyecto: any = {}
-  idProyecto: string | null = null;
+  idOrganizacion: string | null = null
+  idProyecto: string | null = null
   user_name: string | undefined
+  admin: boolean = false
+  creator: boolean = false
 
   async ngOnInit(): Promise<void> {
     this.idProyecto = this.route.snapshot.paramMap.get('idProyecto')
+    this.idOrganizacion = this.route.snapshot.paramMap.get('idOrganizacion')
     await this.auth.user$.subscribe(user => {
       this.user_name = user?.name;
     })
     await this.getProyecto()
     await this.getPlanos()
+    this.admin = await this.authServices.isAdmin()
+    this.creator = await this.authServices.isCreator()
   }
 
   getStatus(status: string): string {
     const status_normalizado = status.toLowerCase()
     switch (status_normalizado) {
-      case 'en espera': return 'status pending';
+      case 'revision': return 'status pending';
       case 'desaprobado': return 'status rejected';
       case 'aprobado': return 'status approved';
       default: return '';
@@ -97,6 +106,10 @@ export class ProyectoComponent implements OnInit{
 
   crearPlano(){
     this.router.navigate(['/plano_create', this.idProyecto])
+  }
+
+  modificarProyecto(){
+    this.router.navigate(['/modificar_proyecto', this.idProyecto, this.idOrganizacion])
   }
 
 }

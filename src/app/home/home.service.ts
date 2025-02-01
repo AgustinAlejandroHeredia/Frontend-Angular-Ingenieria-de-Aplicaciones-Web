@@ -11,7 +11,7 @@ export class HomeService {
   
   constructor(private http: HttpClient) { }
 
-  getProyectosByUser(idUser: String): Observable<any[]>{
-    return this.http.get<any[]>(`${apiUrl}/proyectos/user/${idUser}`); // obtiene los planos en los que este user esta registrado
+  getProyectosByUserAndOrganizacion(idUser: string, idOrganizacion: string): Observable<any[]>{
+    return this.http.get<any[]>(`${apiUrl}/proyectos/user_organizacion/${idUser}/${idOrganizacion}`); // obtiene los planos en los que este user esta registrado
   }
 }

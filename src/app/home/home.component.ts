@@ -23,12 +23,6 @@ import { ActualizarNavbarService } from '../services/actualizar-navbar.service';
 })
 export class HomeComponent implements OnInit{
 
-  /*
-  import { OrganizacionService } from '../organizacion/organizacion.service';
-  , private organizacionService: OrganizacionService
-  this.organizacionService.setOrganizacionNombre(organizacion.nombre)
-  */
-
   constructor(public auth: AuthService, private homeService: HomeService, private router: Router, private route: ActivatedRoute, private authServices: AuthServices, private organizacionService: OrganizacionService, private actualizarNavbarService: ActualizarNavbarService){}
 
   proyectos: any[] = []

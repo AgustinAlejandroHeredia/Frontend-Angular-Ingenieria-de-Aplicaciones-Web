@@ -22,17 +22,17 @@
                 </button>
             </div>
 
-            <button *ngIf="botoninicial" class="create-btn" type="button" (click)="ingresarToken()">Ingresar token +</button>
+            <button *ngIf="botoninicial" id="ingresar-token-2" class="create-btn" type="button" (click)="ingresarToken()">Ingresar token +</button>
             <div *ngIf="ingresoToken">
-                <button for="token" class="create-btn" type="button" (click)="validarToken()">Validar</button>
-                <input id="token" [(ngModel)]="token" placeholder="ejemplo : 12345">
+                <button for="token" class="create-btn" type="button" (click)="validarToken()">Validar!</button>
+                <input id="token" [(ngModel)]="token" placeholder="ejemplo : 123456">
             </div>
 
         </div>
 
         <div class="projects" *ngIf="organizaciones.length === 0">
 
-            <button *ngIf="botoninicial" class="boton" type="button" (click)="ingresarToken()">Ingresar token +</button>
+            <button *ngIf="botoninicial" class="boton" type="button" id="ingresar-token" (click)="ingresarToken()">Ingresar token +</button>
             <div *ngIf="ingresoToken" class="organizacion">
                 <button for="token" class="boton" type="button" (click)="validarToken()">Validar!</button>
                 <br>

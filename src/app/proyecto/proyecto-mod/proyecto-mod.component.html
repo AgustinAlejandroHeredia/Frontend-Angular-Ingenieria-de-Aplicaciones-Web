@@ -72,6 +72,8 @@
 
         <div class="page-title">Añadir usuarios al proyecto {{'('}} {{ usuariosOrganizacion.length }} {{')'}} </div>
 
+        <p>Se muestran los usuarios que pertenecen a la organizacion actual, si esta buscando un usuario y no se encuentra en esta seccion, puede añadirlo desde la seccion "Admin. Usuarios" </p>
+
         <div class="muestra-planos" *ngFor="let usuario of usuariosOrganizacion">
             <div class="users-options">
                 <p class="usuario-info">Nombre: {{ usuario.nombre }}</p>

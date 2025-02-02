@@ -1,1 +1,42 @@
-<p>admin-users works!</p>
+<body>
+
+    <main class="content">
+
+        <div class="page-title-center">Administracion de usuarios de la organizacion {{organizacion.nombre}} </div>
+
+        <br>
+        <br>
+
+        <button *ngIf="!invitacionMostrar" class="create-btn" (click)="habilitarInvitar()">Invitar usuario a la organizacion</button>
+        <div *ngIf="invitacionMostrar">
+            <div class="page-title">Invitar Usuario</div>
+            <p>La duracion determina por cuanto tiempo sera valida la invitacion para el usuario, pasado ese tiempo, el codigo que se le envie sera invalido para el acceso a esta organizacion.</p>
+            <input type="text" [(ngModel)]="email" id="email" placeholder="email">
+            <br>
+            <label for="opciones">Duracion de la invitacion </label>
+            <select id="opciones" [(ngModel)]="duracion">
+                <option *ngFor="let opcion of opciones" [value]="opcion">{{ opcion }}</option>
+            </select>
+            <br>
+            <br>
+            <button type="button" id="enviar_invitacion" class="create-btn" (click)="enviarInvitacion()"> Enviar invitacion</button>
+        </div>
+
+        <br>
+        <br>
+        <br>
+
+        <div class="page-title">Usuarios del proyecto {{'('}} {{ usuariosOrganizacion.length }} {{')'}} </div>
+
+        <p>Se excluye al usuario administrador actual</p>
+
+        <div class="muestra-planos" *ngFor="let usuario of usuariosOrganizacion">
+            <div class="users-options">
+                <p class="usuario-info">Nombre: {{ usuario.nombre }}</p>
+                <button class="delete-btn-user" (click)="eliminarUser(usuario.id)">X</button>
+            </div>
+        </div>
+
+    </main>
+
+</body>

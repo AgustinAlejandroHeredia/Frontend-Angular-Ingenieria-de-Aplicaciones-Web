@@ -7,6 +7,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService as AuthServices } from '../../services/auth.service';
+import { ActualizarNavbarService } from '../../services/actualizar-navbar.service';
+
 
 // necesita usar funciones de plano que ya estan declaradas en los service de planos
 import { PlanoService } from '../../plano/plano.service';
@@ -26,9 +28,7 @@ import { PlanoService } from '../../plano/plano.service';
 })
 export class ProyectoComponent implements OnInit{
 
-  constructor(private proyectoService: ProyectoService, private planoService:PlanoService, private route: ActivatedRoute, public auth:AuthService, private router:Router, private authServices:AuthServices){}
-
-  
+  constructor(private proyectoService: ProyectoService, private planoService:PlanoService, private route: ActivatedRoute, public auth:AuthService, private router:Router, private authServices:AuthServices, private actualizarNavbarService: ActualizarNavbarService){}
 
   planos: any[] = []
   proyecto: any = {}
@@ -48,6 +48,7 @@ export class ProyectoComponent implements OnInit{
     await this.getPlanos()
     this.admin = await this.authServices.isAdmin()
     this.creator = await this.authServices.isCreator()
+    await this.actualizarNavbarService.validarNavbar(this.idOrganizacion!)
   }
 
   getStatus(status: string): string {

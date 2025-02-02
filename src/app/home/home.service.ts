@@ -14,4 +14,8 @@ export class HomeService {
   getProyectosByUserAndOrganizacion(idUser: string, idOrganizacion: string): Observable<any[]>{
     return this.http.get<any[]>(`${apiUrl}/proyectos/user_organizacion/${idUser}/${idOrganizacion}`); // obtiene los planos en los que este user esta registrado
   }
+
+  eliminarProyecto(idProyecto: string){
+    return this.http.delete(`${apiUrl}/proyectos/${idProyecto}`)
+  }
 }

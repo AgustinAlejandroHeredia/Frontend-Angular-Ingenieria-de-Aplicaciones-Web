@@ -18,7 +18,7 @@
       </select>
     </div>
 
-    <button *ngIf="admin || creator" class="create-btn" type="button" (click)="crearProyecto()">Crear Proyecto +</button>
+    <button *ngIf="admin" class="create-btn" type="button" (click)="crearProyecto()">Crear Proyecto +</button>
 
     <div *ngIf="proyectos.length > 0">
 
@@ -33,6 +33,7 @@
           <div class="project-status">
             <button [ngClass]="getStatus(proyecto.estado)">{{ proyecto.estado }}</button>
             <button class="view-btn" type="button" (click)="verProyecto(proyecto._id)">Ver</button>
+            <button *ngIf="admin" class="delete-btn" type="button" (click)="eliminarProyecto(proyecto._id)">Eliminar</button>
           </div>
         </div>
       </div>

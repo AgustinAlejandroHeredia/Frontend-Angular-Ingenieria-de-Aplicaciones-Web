@@ -94,5 +94,21 @@ export class HomeComponent implements OnInit{
   crearProyecto(){
     this.router.navigate(['/crear_proyecto', this.idOrganizacion])
   }
+
+  async eliminarProyecto(idProyecto: string){
+    const userChoice = await confirm('Confirmar edicion de proyecto?');
+      if(userChoice){
+        this.homeService.eliminarProyecto(idProyecto).subscribe({
+          next: async () => {
+            await alert("Plano eliminado exitosamente")
+            this.getProyectosByUserAndOrganizacion()
+          },
+          error: async (e:any) => {
+            console.log(e)
+            await alert("Error al eliminar el proyecto seleccionado, intente nuevamente")
+          }
+        })
+      }
+  }
   
 }

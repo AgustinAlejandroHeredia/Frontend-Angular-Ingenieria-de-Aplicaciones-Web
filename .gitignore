@@ -42,5 +42,5 @@ testem.log
 Thumbs.db
 
 # ignora environments
-src/environments/environment.ts
-cypress.env.json
+# src/environments/environment.ts
+# cypress.env.json
